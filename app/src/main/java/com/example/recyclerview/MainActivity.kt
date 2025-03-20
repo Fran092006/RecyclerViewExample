@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         apiService = retrofit.create(ApiService::class.java)
 
-        //Llamada a la función cargarGastos para obtener los datos de la API
+        //Llamada a la función cargarGastos para obtener los datos de la API.
         cargarGastos()
 
         //Configura el RecyclerView con el LayoutManager y el adaptador
