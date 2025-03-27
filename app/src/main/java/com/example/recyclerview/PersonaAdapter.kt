@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 class PersonaAdapter(private val listaPersonas: List<Persona>) :
     RecyclerView.Adapter<PersonaAdapter.PersonaViewHolder>() {
 
-        //Almacena las vistas de cada elemento del RecyclerView
+    //Almacena las vistas de cada elemento del RecyclerView
     class PersonaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val usuarioTextView: TextView = itemView.findViewById(R.id.usuarioTextView)//Coge el texto de nombre que hay en el layout item_persona
-        val gastoTotalTextView: TextView = itemView.findViewById(R.id.gastoTotalTextView)//Coge el texto de gastoTotal que hay en item_persona
+        val nombreTextView: TextView = itemView.findViewById(R.id.nombreTextView)
+        val apellidosTextView: TextView = itemView.findViewById(R.id.apellidosTextView)
+        val usuarioTextView: TextView = itemView.findViewById(R.id.usuarioTextView)
+        val emailTextView: TextView = itemView.findViewById(R.id.apellidosTextView)
     }
 
     //Crea nuevas vistas
@@ -26,8 +28,10 @@ class PersonaAdapter(private val listaPersonas: List<Persona>) :
     //Reemplaza el contenido de una vista (creada anteriormente con onCreateViewHolder)
     override fun onBindViewHolder(holder: PersonaViewHolder, position: Int) {
         val personaActual = listaPersonas[position]
-        holder.usuarioTextView.text = "Usuario: ${personaActual.nombre}" //Muestra el formato que se verá con el nombre al lanzar la aplicación
-        holder.gastoTotalTextView.text = "Gasto total: ${personaActual.telefono} €"//Muestra el formato que se verá con el gasto total al lanzar la aplicación
+        holder.nombreTextView.text = "Nombre: ${personaActual.nombre}"
+        holder.apellidosTextView.text = "Apellidos: ${personaActual.apellidos}"
+        holder.usuarioTextView.text = "Usuario: ${personaActual.telefono}" // Nota: 'telefono' en Persona corresponde a 'Usuario' en JSON
+        holder.emailTextView.text = "Email: ${personaActual.email}"
     }
 
     //Devuelve el tamaño del dataset

@@ -4,6 +4,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface ApiService {
-    @GET("ConsultaGastos.php")
-    fun getGastos(): Call<List<Gasto>>
+    @GET("ArrayJson")
+    fun getUsuarios(): Call<List<Usuario>>
 }

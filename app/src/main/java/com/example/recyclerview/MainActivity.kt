@@ -12,6 +12,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.util.Log
+import androidx.appcompat.widget.Toolbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: PersonaAdapter
     private lateinit var listaPersonas: ArrayList<Persona>
     private lateinit var apiService: ApiService
+    private lateinit var toolbar: Toolbar // Agrega esta línea
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
         //Inicialización del RecyclerView y el adaptador
         recyclerView = findViewById(R.id.recyclerView)
-
         listaPersonas = ArrayList()
         adapter = PersonaAdapter(listaPersonas)
 
@@ -38,15 +39,15 @@ class MainActivity : AppCompatActivity() {
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://server.samuelgd.com/api/")
+            .baseUrl("http://frandm.es:8080/LDTSHandlerSession/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         apiService = retrofit.create(ApiService::class.java)
 
-        //Llamada a la función cargarGastos para obtener los datos de la API.
-        cargarGastos()
+        //Llamada a la función cargarUsuarios para obtener los datos de la API.
+        cargarUsuarios()
 
         //Configura el RecyclerView con el LayoutManager y el adaptador
         recyclerView.apply {
@@ -55,20 +56,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //Función cargarGastos() llamada anteriormente
-    private fun cargarGastos() {
-        apiService.getGastos().enqueue(object : Callback<List<Gasto>> {
-            override fun onResponse(call: Call<List<Gasto>>, response: Response<List<Gasto>>) {
+    //Función cargarUsuarios() llamada anteriormente
+    private fun cargarUsuarios() {
+        apiService.getUsuarios().enqueue(object : Callback<List<Usuario>> {
+            override fun onResponse(call: Call<List<Usuario>>, response: Response<List<Usuario>>) {
                 if (response.isSuccessful) {
-                    val gastos = response.body()
-                    gastos?.let {
+                    val usuarios = response.body()
+                    usuarios?.let {
                         listaPersonas.clear()
-                        for (gasto in it) {
-                            val partesUsuario = gasto.Usuario.split(": ")
-                            val nombreUsuario = partesUsuario.getOrNull(1) ?: "Usuario Desconocido"
-                            val partesGasto = gasto.GastoTotal.split(" ")
-                            val gastoNumero = partesGasto.getOrNull(0) ?: "0"
-                            listaPersonas.add(Persona(nombreUsuario, "", gastoNumero, ""))
+                        for (usuario in it) {
+                            listaPersonas.add(Persona(usuario.Nombre, usuario.Apellidos, usuario.Usuario, usuario.Email))
                         }
                         adapter.notifyDataSetChanged()
                     }
@@ -77,12 +74,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<List<Gasto>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Usuario>>, t: Throwable) {
                 Log.e("MainActivity", "Error en la llamada: ${t.message}")
             }
         })
     }
 }
+
 /*Ejemplo para hacer el recyclerView con datos estáticos
     listaPersonas = ArrayList()
     listaPersonas.add(Persona("Juan", "Pérez", "123456789", "juan.perez@example.com"))*/
