@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity() {
 
         apiService = retrofit.create(ApiService::class.java)
 
-        //Llamada a la función cargarUsuarios para obtener los datos de la API.
-        cargarUsuarios()
+        //Llamada a la función cargarEventos para obtener los datos de la API.
+        cargarEventos()
 
         //Configura el RecyclerView con el LayoutManager y el adaptador
         recyclerView.apply {
@@ -56,16 +56,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //Función cargarUsuarios() llamada anteriormente
-    private fun cargarUsuarios() {
-        apiService.getUsuarios().enqueue(object : Callback<List<Usuario>> {
-            override fun onResponse(call: Call<List<Usuario>>, response: Response<List<Usuario>>) {
+    //Función cargarEventos() llamada anteriormente
+    private fun cargarEventos() {
+        apiService.getEventos().enqueue(object : Callback<List<Evento>> {
+            override fun onResponse(call: Call<List<Evento>>, response: Response<List<Evento>>) {
                 if (response.isSuccessful) {
-                    val usuarios = response.body()
-                    usuarios?.let {
+                    val eventos = response.body()
+                    eventos?.let {
                         listaPersonas.clear()
-                        for (usuario in it) {
-                            listaPersonas.add(Persona(usuario.Nombre, usuario.Apellidos, usuario.Usuario, usuario.Email))
+                        for (evento in it) {
+                            if (evento.NombreEvento != null && evento.Duración != null && evento.Creador != null && evento.Lugar != null) {
+                                listaPersonas.add(Persona(evento.NombreEvento, evento.Duración, evento.Creador, evento.Lugar))
+                            }
                         }
                         adapter.notifyDataSetChanged()
                     }
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<List<Usuario>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Evento>>, t: Throwable) {
                 Log.e("MainActivity", "Error en la llamada: ${t.message}")
             }
         })

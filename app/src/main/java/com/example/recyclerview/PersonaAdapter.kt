@@ -12,10 +12,10 @@ class PersonaAdapter(private val listaPersonas: List<Persona>) :
 
     //Almacena las vistas de cada elemento del RecyclerView
     class PersonaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nombreTextView: TextView = itemView.findViewById(R.id.nombreTextView)
-        val apellidosTextView: TextView = itemView.findViewById(R.id.apellidosTextView)
-        val usuarioTextView: TextView = itemView.findViewById(R.id.usuarioTextView)
-        val emailTextView: TextView = itemView.findViewById(R.id.apellidosTextView)
+        val nombreEventoTextView: TextView = itemView.findViewById(R.id.nombreEventoTextView)
+        val duracionTextView: TextView = itemView.findViewById(R.id.duracionTextView)
+        val creadorTextView: TextView = itemView.findViewById(R.id.creadorTextView)
+        val lugarTextView: TextView = itemView.findViewById(R.id.lugarTextView)
     }
 
     //Crea nuevas vistas
@@ -28,10 +28,10 @@ class PersonaAdapter(private val listaPersonas: List<Persona>) :
     //Reemplaza el contenido de una vista (creada anteriormente con onCreateViewHolder)
     override fun onBindViewHolder(holder: PersonaViewHolder, position: Int) {
         val personaActual = listaPersonas[position]
-        holder.nombreTextView.text = "Nombre: ${personaActual.nombre}"
-        holder.apellidosTextView.text = "Apellidos: ${personaActual.apellidos}"
-        holder.usuarioTextView.text = "Usuario: ${personaActual.telefono}" // Nota: 'telefono' en Persona corresponde a 'Usuario' en JSON
-        holder.emailTextView.text = "Email: ${personaActual.email}"
+        holder.nombreEventoTextView.text = "Nombre Evento: ${personaActual.nombreEvento ?: "N/A"}"
+        holder.duracionTextView.text = "Duración: ${personaActual.duracion ?: "N/A"}"
+        holder.creadorTextView.text = "Creador: ${personaActual.creador ?: "N/A"}"
+        holder.lugarTextView.text = "Lugar: ${personaActual.lugar ?: "N/A"}"
     }
 
     //Devuelve el tamaño del dataset

@@ -7,7 +7,7 @@
     android:layout_marginTop="40dp">
 
     <TextView
-        android:id="@+id/nombreTextView"
+        android:id="@+id/nombreEventoTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
@@ -16,21 +16,21 @@
         android:layout_marginBottom="4dp"/>
 
     <TextView
-        android:id="@+id/apellidosTextView"
+        android:id="@+id/duracionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/usuarioTextView"
+        android:id="@+id/creadorTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/emailTextView"
+        android:id="@+id/lugarTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
